@@ -29,18 +29,20 @@ describe.only(`Bookmarks endpoints`, function() {
         store.bookmarks = bookmarksCopy
     })
 
-    context(`given there are bookmarks`, () => {
-        const testBookmarks = fixtures.makeBookmarksArray();
-        beforeEach('insert bookmarks', () => {
-                   return db
-                     .into('bookmarks')
-                     .insert(testBookmarks)
-                 })
-        it(`responds with 200 and all the bookmarks`, () => {
-            return supertest(app)
-                .get('/bookmark')
-                .set('Authorization', `Bearer ${process.env.API_TOKEN}`)
-                .expect(testBookmarks)
+    describe('GET /bookmark', () => {
+        context(`given there are bookmarks`, () => {
+            const testBookmarks = fixtures.makeBookmarksArray();
+            beforeEach('insert bookmarks', () => {
+                       return db
+                         .into('bookmarks')
+                         .insert(testBookmarks)
+                     })
+            it(`responds with 200 and all the bookmarks`, () => {
+                return supertest(app)
+                    .get('/bookmark')
+                    .set('Authorization', `Bearer ${process.env.API_TOKEN}`)
+                    .expect(testBookmarks)
+            })
         })
     })
 })
