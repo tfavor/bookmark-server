@@ -1,25 +1,25 @@
 function makeBookmarksArray() {
     return [
         {
-            id: 8,
-            title: "eight",
-            url: "url8",
-            description: "description8",
-            rating: "1"
+            id: 1,
+            title: "one",
+            url: "url1",
+            description: "description1",
+            rating: 1
         },
         {
-            id: 9,
-            title: "nine",
-            url: "url9",
-            description: "description9",
-            rating: "2"
+            id: 2,
+            title: "two",
+            url: "url2",
+            description: "description2",
+            rating: 2
         },
         {
-            id: 10,
-            title: "ten",
-            url: "url10",
-            description: "description10",
-            rating: "3"
+            id: 13,
+            title: "three",
+            url: "url3",
+            description: "description3",
+            rating: 3
         },
     ]
 }

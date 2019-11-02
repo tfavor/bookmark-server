@@ -30,6 +30,14 @@ describe.only(`Bookmarks endpoints`, function() {
     })
 
     describe('GET /bookmark', () => {
+        context('given no bookmarks', () => {
+            it('returns status 200 and empty array', () => {
+                return supertest(app)
+                    .get('/bookmark')
+                    .set('Authorization', `Bearer ${process.env.API_TOKEN}`)
+                    .expect(200, [])
+            })
+        })
         context(`given there are bookmarks`, () => {
             const testBookmarks = fixtures.makeBookmarksArray();
             beforeEach('insert bookmarks', () => {
@@ -42,6 +50,35 @@ describe.only(`Bookmarks endpoints`, function() {
                     .get('/bookmark')
                     .set('Authorization', `Bearer ${process.env.API_TOKEN}`)
                     .expect(testBookmarks)
+            })
+
+        })
+    })
+    describe('GET /bookmark/:id', () => {
+        context('given no bookmarks', () => {
+            it("responds 404 not found", () => {
+                return supertest(app)
+                    .get('/bookmark/1')
+                    .set('Authorization', `Bearer ${process.env.API_TOKEN}`)
+                    .expect(404, 'not found')                
+            })
+        })
+        context('given there are bookmarks', () => {
+            const testBookmarks = fixtures.makeBookmarksArray();
+
+            beforeEach('insert bookmarks', () => {
+                return db
+                    .into('bookmarks')
+                    .insert(testBookmarks)
+            })
+            it('responds with 200 and a specific bookmark', () => {
+                const bookmark_id = 2;
+                const expectedBookmark = testBookmarks[bookmark_id - 1]
+
+                return supertest(app)
+                    .get(`/bookmark/${bookmark_id}`)
+                    .set('Authorization', `Bearer ${process.env.API_TOKEN}`)
+                    .expect(expectedBookmark)
             })
         })
     })
